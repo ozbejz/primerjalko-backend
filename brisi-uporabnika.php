@@ -6,7 +6,7 @@ $data = json_decode(file_get_contents('php://input'));
 
 $mysqli = require __DIR__ . "/database.php";
 
-$sql = "INSERT INTO kategorija (naziv, opis) VALUES (?, ?)";
+$sql = "DELETE FROM uporabnik WHERE Id=?";
 
 $stmt = $mysqli->stmt_init();
 
@@ -14,7 +14,7 @@ if (!$stmt->prepare($sql)){
     echo("SQL error: " . $mysqli->error);
 }
 
-$stmt->bind_param("ss", $data->naziv, $data->opis);
+$stmt->bind_param("i", $data->uporabnik);
 
 if($stmt->execute()){
     echo json_encode(['status' => 1]);

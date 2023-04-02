@@ -8,11 +8,7 @@ $mysqli = require __DIR__ . "/database.php";
 
 if(isset($header["id"])){
 
-    $sql = "SELECT i.IdIzdelek, i.naziv, i.znamka, CAST(AVG(o.vrednost) AS FLOAT) AS vrednost, MIN(t.cena) AS cena FROM izdelek i 
-    LEFT OUTER JOIN ocena o ON o.IdIzdelek = i.IdIzdelek 
-    INNER JOIN trgovina t ON t.IdIzdelek = i.Idizdelek 
-    WHERE i.IdKategorija = ? 
-    GROUP BY i.IdIzdelek, i.naziv ORDER BY o.vrednost DESC";
+    $sql = "SELECT DISTINCT znamka FROM izdelek WHERE IdKategorija = ?";
 
     $stmt = $mysqli->stmt_init();
 
@@ -32,15 +28,6 @@ if(isset($header["id"])){
     }
 
     $stmt->close();
-    echo json_encode($result);
-}
-else{
-    $sql = "SELECT IdIzdelek, naziv FROM izdelek ORDER BY naziv";
-    $rs = $mysqli->query($sql);
-    $result = array();
-    while($r = $rs->fetch_assoc()){
-        array_push($result, $r);
-    }
     echo json_encode($result);
 }
 ?>
