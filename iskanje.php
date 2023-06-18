@@ -11,7 +11,7 @@ if(isset($header["isci"])){
         echo json_encode('');
         exit;
     }
-    $test_string = '%' . $header["isci"] . '%';
+    $niz = '%' . $header["isci"] . '%';
     $sql = "SELECT naziv, IdIzdelek FROM izdelek WHERE naziv LIKE ?";
 
     $stmt = $mysqli->stmt_init();
@@ -20,7 +20,7 @@ if(isset($header["isci"])){
         echo("SQL error: " . $mysqli->error);
     }
 
-    $stmt->bind_param("s", $test_string);
+    $stmt->bind_param("s", $niz);
 
     $stmt->execute();
 
